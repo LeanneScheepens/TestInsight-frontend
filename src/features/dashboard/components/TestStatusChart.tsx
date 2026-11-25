@@ -1,5 +1,7 @@
 import Card from "../../common/components/Card";
-import { useTestStatusCounts } from "../hooks/useTestStatusCounts";
+import { useFetchData } from "../hooks/useFetchData";
+import { getLatestTestStatusCounts } from "../services/TestResultService";
+import type { TestStatusCount } from "../types/TestStatusCount";
 
 import {
     PieChart,
@@ -20,8 +22,8 @@ const STATUS_COLORS: Record<string, string> = {
 
 export default function TestStatusChart() {
 
-    const { testStatusCounts, loading, error } =
-        useTestStatusCounts();
+    const { data: testStatusCounts, loading, error } =
+        useFetchData<TestStatusCount>(getLatestTestStatusCounts);
 
     if (loading) {
         return <Card>Loading test results...</Card>;
